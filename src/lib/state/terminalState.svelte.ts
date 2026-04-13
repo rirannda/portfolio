@@ -1,0 +1,28 @@
+export type TerminalLine = {
+    command: string;
+    response: string | string[]; // 複数行のレスポンス（neofetch等）に対応するため配列も許容
+    isError?: boolean;
+};
+
+class TerminalState {
+    history = $state<string[]>([]); // ↑↓キーで呼び出す用の履歴
+    output = $state<TerminalLine[]>([]); // 画面に表示されるログ
+
+    pushOutput(command: string, response: string | string[], isError = false) {
+        this.output.push({ command, response, isError });
+    }
+
+    // history（入力履歴）の追加
+    pushHistory(command: string) {
+        if (command.trim() !== '') {
+            this.history.push(command);
+        }
+    }
+
+    // clearコマンド用
+    clearOutput() {
+        this.output = [];
+    }
+}
+
+export const terminal = new TerminalState();
