@@ -1,1 +1,5 @@
 @import 'tailwindcss';
+@font-face {
+	font-family: 'NerdFont';
+	src: url('fonts/HackNerdFont-Regular.ttf') format('truetype');
+}

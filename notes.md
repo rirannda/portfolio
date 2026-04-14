@@ -72,3 +72,4 @@ Rebooting PortfolioOS v0.0.0 ...
 ## 未実装
 
 - [ ] HeaderのGoToTop機能と装飾
+- [ ] レスポンシブ対応
