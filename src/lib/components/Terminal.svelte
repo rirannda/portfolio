@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { terminal } from '$lib/state/terminalState.svelte';
 	import { page } from '$app/state';
+	import { parseCommand } from '$lib/terminal/parser';
 
 	let inputValue = $state('');
 	let historyIndex = $state(-1);
@@ -9,6 +10,10 @@
 	const currentPrompt = $derived(
 		'visitor@PortfoliOS:~/portfolio' + (page.url.pathname == '/' ? '' : page.url.pathname) + '$ '
 	);
+	const currentPath = $derived(
+		'home/visitor/portfolio' + (page.url.pathname == '/' ? '' : page.url.pathname)
+	);
+	const latest = $derived(terminal.output[terminal.output.length - 1]);
 
 	function handleKeydown(event: KeyboardEvent) {
 		if (terminal.history.length === 0) {
@@ -33,12 +38,13 @@
 			}
 		}
 	}
-	function handleSubmit(event: SubmitEvent) {
+	async function handleSubmit(event: SubmitEvent) {
 		event.preventDefault();
 		const input = inputValue.trim();
 		if (input) {
 			terminal.pushHistory(input); // Historyに保存
-			// コマンドのパースなどの処理
+			const result = await parseCommand(input, currentPath);
+			terminal.pushOutput(currentPrompt, input, result.response, result.isError);
 		}
 		inputValue = '';
 		historyIndex = -1;
@@ -64,6 +70,22 @@
 				{/if}
 			</div>
 		{/each}
+	</div>
+{:else}
+	<div class="fixed bottom-10 z-50 w-full bg-black/90 px-5 font-mono text-white">
+		{#if latest == undefined}
+			Welcome to PortfoliOS! Type 'help' to start.
+		{:else}
+			{latest.path}
+			{latest.command} <br />
+			{#if typeof latest.response === 'string'}
+				<div class="ml-4">{latest.response}</div>
+			{:else}
+				{#each latest.response as resLine, i (i)}
+					<div class="ml-4">{resLine}</div>
+				{/each}
+			{/if}
+		{/if}
 	</div>
 {/if}
 <form
