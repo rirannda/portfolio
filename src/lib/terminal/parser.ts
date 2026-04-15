@@ -43,6 +43,12 @@ export async function parseCommand(input: string, Path: string) {
             return { response: new Date().toString() };
         case 'uname':
             return { response: 'Folix' };
+        case 'reboot':
+            terminal.setRebooting(true);
+            setTimeout(async () => {
+                window.location.href = resolve('/'); // ルートにリダイレクトして再起動を模倣
+            }, 3000);
+            return { response: 'Broadcast message from system: System is going down for reboot NOW!' };
         default:
             return { response: `Command not found: ${command}`, isError: true };
     }

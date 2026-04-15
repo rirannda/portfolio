@@ -1,0 +1,49 @@
+<script lang="ts">
+	// 本物っぽい起動ログの配列
+	const bootMessages = [
+		'[ OK ] Stopped svelte.service.',
+		'[ OK ] Stopped typescript.service.',
+		'[ OK ] Stopped portfolio.service.',
+		'[ OK ] Unmounted /home.',
+		'[ OK ] Reached target Unmount All Filesystems.',
+		'[ OK ] Reached target Shutdown.',
+		'[ OK ] Started Reboot.',
+		'　',
+		'Rebooting PortfolioOS v0.0.0 ...'
+	];
+
+	let visibleLines = $state<string[]>([]);
+
+	// コンポーネントが表示された時に、少しずつ文字を出していく
+	$effect(() => {
+		let currentIndex = 0;
+		let timeoutId: ReturnType<typeof setTimeout> | null = null;
+		const interval = setInterval(() => {
+			if (currentIndex < bootMessages.length - 1) {
+				visibleLines.push(bootMessages[currentIndex]);
+				visibleLines = visibleLines;
+				currentIndex++;
+			} else if (currentIndex === bootMessages.length - 1) {
+				// 最後のメッセージだけ0.3秒待ってから表示
+				clearInterval(interval);
+				timeoutId = setTimeout(() => {
+					visibleLines.push(bootMessages[bootMessages.length - 1]);
+					visibleLines = visibleLines;
+				}, 300);
+				currentIndex++;
+			}
+		}, 150); // 0.15秒ごとに次の行を表示（お好みで調整）
+
+		return () => {
+			clearInterval(interval);
+			if (timeoutId) clearTimeout(timeoutId);
+		};
+	});
+</script>
+
+<div class="fixed inset-0 z-9999 flex flex-col bg-black p-6 font-mono text-green-500">
+	{#each visibleLines as line, i (i)}
+		<div class="">{line}</div>
+	{/each}
+	<div class="mt-2 h-4 w-2 bg-green-500"></div>
+</div>
