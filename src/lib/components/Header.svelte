@@ -3,7 +3,7 @@
 	import { page } from '$app/state';
 
 	const currentPrompt = $derived(
-		'visitor@PortfoliOS: ~/portfolio' + (page.url.pathname == '/' ? '' : page.url.pathname) + '$ '
+		'visitor@PortfoliOS:~/portfolio' + (page.url.pathname == '/' ? '' : page.url.pathname) + '$ '
 	);
 
 	let menuOpen = $state(false);

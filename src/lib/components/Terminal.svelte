@@ -7,7 +7,7 @@
 	let isExpanded = $state(false);
 	const maxIndex = $derived(terminal.history.length - 1);
 	const currentPrompt = $derived(
-		'visitor@PortfoliOS: ~/portfolio' + (page.url.pathname == '/' ? '' : page.url.pathname) + '$ '
+		'visitor@PortfoliOS:~/portfolio' + (page.url.pathname == '/' ? '' : page.url.pathname) + '$ '
 	);
 
 	function handleKeydown(event: KeyboardEvent) {
@@ -43,7 +43,7 @@
 		inputValue = '';
 		historyIndex = -1;
 	}
-	function toggleEnpand() {
+	function toggleExpand() {
 		isExpanded = !isExpanded;
 	}
 </script>
@@ -51,7 +51,20 @@
 {#if isExpanded}
 	<div
 		class="fixed top-20 right-0 bottom-10 left-0 z-50 overflow-y-auto bg-black/90 p-4 font-mono text-white"
-	></div>
+	>
+		{#each terminal.output as line, i (i)}
+			<div class="text-white">
+				<div>{line.path} {line.command}</div>
+				{#if typeof line.response === 'string'}
+					<div>{line.response}</div>
+				{:else}
+					{#each line.response as resLine, j (j)}
+						<div>{resLine}</div>
+					{/each}
+				{/if}
+			</div>
+		{/each}
+	</div>
 {/if}
 <form
 	onsubmit={handleSubmit}
@@ -65,7 +78,7 @@
 		class="w-auto flex-1 pl-3 outline-0"
 	/>
 	<input type="submit" class="ml-2 font-bold outline-0" value="Run" />
-	<button onclick={toggleEnpand} class="justify-center py-0 pl-3 font-[NerdFont] text-xl font-bold"
+	<button onclick={toggleExpand} class="justify-center py-0 pl-3 font-[NerdFont] text-xl font-bold"
 		>󰄿</button
 	>
 </form>
