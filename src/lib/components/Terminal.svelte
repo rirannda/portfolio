@@ -10,9 +10,7 @@
 	const currentPrompt = $derived(
 		'visitor@PortfoliOS:~/portfolio' + (page.url.pathname == '/' ? '' : page.url.pathname) + '$ '
 	);
-	const currentPath = $derived(
-		'home/visitor/portfolio' + (page.url.pathname == '/' ? '' : page.url.pathname)
-	);
+	const currentPath = $derived(page.url.pathname == '/' ? '' : page.url.pathname);
 	const latest = $derived(terminal.output[terminal.output.length - 1]);
 
 	function handleKeydown(event: KeyboardEvent) {
@@ -59,20 +57,20 @@
 		class="fixed top-20 right-0 bottom-10 left-0 z-50 overflow-y-auto bg-black/90 p-4 font-mono text-white"
 	>
 		{#each terminal.output as line, i (i)}
-			<div class="text-white">
+			<div class="mb-2 text-white">
 				<div>{line.path} {line.command}</div>
 				{#if typeof line.response === 'string'}
-					<div>{line.response}</div>
+					<div class="ml-4">{line.response}</div>
 				{:else}
 					{#each line.response as resLine, j (j)}
-						<div>{resLine}</div>
+						<div class="ml-4 whitespace-pre">{resLine}</div>
 					{/each}
 				{/if}
 			</div>
 		{/each}
 	</div>
 {:else}
-	<div class="fixed bottom-10 z-50 w-full bg-black/90 px-5 font-mono text-white">
+	<div class="fixed bottom-10 z-50 w-full bg-black px-5 font-mono text-white">
 		{#if latest == undefined}
 			Welcome to PortfoliOS! Type 'help' to start.
 		{:else}
@@ -82,7 +80,7 @@
 				<div class="ml-4">{latest.response}</div>
 			{:else}
 				{#each latest.response as resLine, i (i)}
-					<div class="ml-4">{resLine}</div>
+					<div class="ml-4 whitespace-pre">{resLine}</div>
 				{/each}
 			{/if}
 		{/if}
