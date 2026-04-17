@@ -2,6 +2,7 @@ import { goto } from "$app/navigation";
 import { resolve } from "$app/paths";
 import { terminal } from "$lib/state/terminalState.svelte";
 import { os } from "$lib/state/osState.svelte";
+import { theme } from "$lib/state/themeState.svelte";
 
 export async function parseCommand(input: string, Path: string) {
     // 空白で分割（連続する空白にも対応させるなら正規表現 /\s+/ が便利です）
@@ -93,11 +94,27 @@ export async function parseCommand(input: string, Path: string) {
                     '/**       **     //**/**      /** //** **     OS: PortfoliOS Folix web edition',
                     '/******* /**      /**/**      /**  //***      Host: Web Browser',
                     '/**////  /**      /**/**      /**   **/**     Kernel: Folix 0.0.1',
-                    '/**      //**     ** /**      /**  ** //**    Theme: ' + os.theme,
+                    '/**      //**     ** /**      /**  ** //**    Theme: ' + theme.isDark ? 'Dark' : 'Light',
                     '/**       //*******  /********/** **   //**   Developer: gorirari',
                     '//         ///////   //////// // //     //    ',
                 ]
             };
+        case 'theme': {
+            const mode = args[1]?.toLowerCase();
+
+            if (mode === 'dark') {
+                theme.setTheme('dark');
+                return { response: 'Theme changed to dark mode.' };
+            } else if (mode === 'light') {
+                theme.setTheme('light');
+                return { response: 'Theme changed to light mode.' };
+            } else {
+                return {
+                    response: 'theme: invalid mode ' + (mode || '') + '. Usage: theme <light|dark>',
+                    isError: true
+                };
+            }
+        }
         case 'welcome':
             return {
                 response: [

@@ -74,5 +74,5 @@ Rebooting PortfolioOS v0.0.0 ...
 - [ ] HeaderのGoToTop機能と装飾
 - [ ] レスポンシブ対応
 - [ ] コマンド自動補完
-- [ ] テーマ
+- [ ] darkテーマのcss
 - [ ] `help (commands)`や`(command) -h`,`(command) --help`
