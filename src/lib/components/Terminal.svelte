@@ -53,6 +53,7 @@
 					inputValue = `${command} ${matches[0]}`;
 				}
 			}
+			return;
 		}
 		if (terminal.history.length === 0) {
 			return;
