@@ -2,12 +2,17 @@
 	import { resolve } from '$app/paths';
 	import { page } from '$app/state';
 	import { terminal } from '$lib/state/terminalState.svelte';
+	import { theme } from '$lib/state/themeState.svelte';
 
 	const currentPrompt = $derived(
 		'visitor@PortfoliOS:~/portfolio' +
 			(terminal.currentPath == '/' ? '' : terminal.currentPath) +
 			'$ '
 	);
+
+	function toggleTheme() {
+		theme.toggle();
+	}
 
 	let menuOpen = $state(false);
 
@@ -23,7 +28,8 @@
 		{ id: 'top', label: 'Home' },
 		{ id: 'about', label: 'About' },
 		{ id: 'featured', label: 'Featured' },
-		{ id: 'skills', label: 'Skills' }
+		{ id: 'skills', label: 'Skills' },
+		{ id: 'contact', label: 'Contact' }
 	] as const;
 
 	function isActiveLink(id: (typeof links)[number]['id']) {
@@ -46,11 +52,19 @@
 		{#each links as link (link.id)}
 			<a
 				href={resolve(`/#${link.id}`)}
-				class="transition-opacity hover:opacity-80"
+				class="relative inline-block transition-colors before:absolute before:bottom-0 before:left-0 before:h-0.5 before:w-full before:origin-left before:scale-x-0 before:bg-[#08c] before:transition-transform before:duration-300 before:content-[''] hover:text-white/80 hover:before:scale-x-100"
 				class:font-bold={isActiveLink(link.id)}>{link.label}</a
 			>
 		{/each}
 	</nav>
+
+	<button
+		type="button"
+		onclick={toggleTheme}
+		class="rounded-xl border border-[#08c] py-2 pr-4.5 pl-3.5 text-center font-[NerdFont] whitespace-pre outline-0"
+	>
+		{theme.isDark ? '  Light' : '  Dark'}
+	</button>
 
 	<button
 		class="relative ml-auto h-9 w-11 shrink-0 md:ml-10"
@@ -85,7 +99,7 @@
 				<a
 					href={resolve(`/#${link.id}`)}
 					onclick={closeMenu}
-					class="rounded px-2 py-3 transition-colors hover:bg-[#020617]"
+					class="rounded px-2 py-2 transition-colors hover:bg-[#1E1E1E]"
 					class:font-bold={isActiveLink(link.id)}>{link.label}</a
 				>
 			{/each}

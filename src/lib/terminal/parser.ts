@@ -104,7 +104,7 @@ export async function parseCommand(input: string, Path: string) {
                 }
                 let target = (args[0] == '') ? '/' : args[0];
 
-                const sections = ['about', 'skills', 'featured'];
+                const sections = ['about', 'skills', 'featured', 'contact'];
 
                 if (target === '/home/visitor/portfolio') {
                     target = '/';
@@ -152,8 +152,8 @@ export async function parseCommand(input: string, Path: string) {
                     target = target.replace(/\/+$/, ''); // パスの末尾のスラッシュを削除
                 }
 
-                if ((Path == '' && target == '.') || target == '/') {
-                    return { response: ['about featured skills /works'] };
+                if ((Path == '/' && target == '.') || target == '/') {
+                    return { response: ['about featured skills contact /works'] };
                 }
                 if ((Path == '/about' && target == '.') || target == '/about' || Path == '' && target == 'about') {
                     return { response: ['+page.svelte'] };
@@ -175,8 +175,7 @@ export async function parseCommand(input: string, Path: string) {
             return { response: 'visitor' };
         case 'date':
             return { response: new Date().toString() };
-        case 'uname': // ToDo! add options...
-
+        case 'uname':
             return { response: 'Folix' };
         case 'reboot':
             os.setRebooting(true);
