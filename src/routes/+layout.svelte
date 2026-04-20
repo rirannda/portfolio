@@ -13,6 +13,7 @@
 </script>
 
 <svelte:head><link rel="icon" href={favicon} /></svelte:head>
+
 {#if os.isBooting}
 	<BootingScreen />
 {:else if os.isRebooting}

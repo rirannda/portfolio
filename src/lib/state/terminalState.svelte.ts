@@ -9,6 +9,10 @@ class TerminalState {
     history = $state<string[]>([]); // ↑↓キーで呼び出す用の履歴を保持
     output = $state<TerminalLine[]>([]); // 画面に表示されるログを保持
 
+    currentPath = $state<string>('/'); // カレントディレクトリを保持
+
+    isLineExpanded = $state(false); // ターミナルが展開されているかどうか
+
     pushOutput(path: string, command: string, response: string | string[], isError = false) {
         this.output.push({ path, command, response, isError });
     }

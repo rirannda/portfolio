@@ -13,7 +13,7 @@ async function getHelpText(command: string) {
 
 export const availableCommands = ['help', 'echo', 'cd', 'ls', 'pwd', 'reset', 'whoami', 'date', 'uname', 'reboot', 'sudo', 'su', 'theme', 'fakefetch', 'welcome'];
 
-export const availableDirs = ['about', 'projects', 'skills'];
+export const availableDirs = ['about', 'featured', 'skills'];
 
 export async function parseCommand(input: string, Path: string) {
     // 空白で分割（連続する空白にも対応させるなら正規表現 /\s+/ が便利です）
@@ -63,6 +63,8 @@ export async function parseCommand(input: string, Path: string) {
     }
 
     switch (command) {
+        case 'test':
+            return { response: `${Path}` };
         case 'help':
             {
                 // 引数がない場合 (argsが [''] のみの場合)
@@ -101,30 +103,36 @@ export async function parseCommand(input: string, Path: string) {
                     return { response: `cd: too many arguments`, isError: true };
                 }
                 let target = (args[0] == '') ? '/' : args[0];
-                if (target.startsWith('/home/visitor/portfolio') || target.startsWith('/home/visitor/portfolio/')) {
-                    target = target.replace('/home/visitor/portfolio', '/'); // カレントディレクトリを表す部分を削除
+
+                const sections = ['about', 'skills', 'featured'];
+
+                if (target === '/home/visitor/portfolio') {
+                    target = '/';
+                }
+
+                if (target.startsWith('/home/visitor/portfolio/')) {
+                    target = target.replace('/home/visitor/portfolio/', '/'); // カレントディレクトリを表す部分を削除
                 }
                 if ((target.endsWith('/')) && (target !== '/')) {
                     target = target.replace(/\/+$/, ''); // パスの末尾のスラッシュを削除
                 }
 
-                if (!target || target === '~' || target === '/') {
-                    await goto(resolve('/'));
+                if (target === '~' || target === '/') {
+                    await goto(resolve('/#top'));
                     return { response: '' };
                 }
-                if (target == 'about' || target == '/about') {
-                    await goto(resolve('/about'));
+                if (sections.includes(target)) {
+                    await goto(resolve(`/#${target}`));
                     return { response: '' };
                 }
-                if (target == 'projects' || target == '/projects') {
-                    await goto(resolve('/projects'));
+                if (target === 'works') {
+                    await goto(resolve('/works'));
                     return { response: '' };
                 }
-                if (target == 'skills' || target == '/skills') {
-                    await goto(resolve('/skills'));
+                if (target === '.' || target === Path) {
                     return { response: '' };
                 }
-                if (target == 'root' || target == 'etc' || target == 'var' || target == 'usr' || target == '/root' || target == '/etc' || target == '/var' || target == '/usr') {
+                if (target == '/root' || target == '/etc' || target == '/var' || target == '/usr') {
                     return { response: `cd: permission denied: ${target}`, isError: true };
                 }
                 return { response: `cd: no such file or directory: ${target}`, isError: true };
@@ -145,12 +153,12 @@ export async function parseCommand(input: string, Path: string) {
                 }
 
                 if ((Path == '' && target == '.') || target == '/') {
-                    return { response: ['about projects skills'] };
+                    return { response: ['about featured skills /works'] };
                 }
                 if ((Path == '/about' && target == '.') || target == '/about' || Path == '' && target == 'about') {
                     return { response: ['+page.svelte'] };
                 }
-                if ((Path == '/projects' && target == '.') || target == '/projects' || Path == '' && target == 'projects') {
+                if ((Path == '/featured' && target == '.') || target == '/featured' || Path == '' && target == 'featured') {
                     return { response: ['+page.svelte'] };
                 }
                 if ((Path == '/skills' && target == '.') || target == '/skills' || Path == '' && target == 'skills') {
