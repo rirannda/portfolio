@@ -53,4 +53,8 @@ export const helpTexts: Record<string, string | string[]> = {
         "Usage: whoami",
         "Displays the current user name."
     ],
+    open: [
+        "Usage: open <url>",
+        "Opens the specified URL in a new tab."
+    ]
 };

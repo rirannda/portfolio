@@ -7,14 +7,22 @@
 	const currentPrompt = $derived(
 		'visitor@PortfoliOS:~/portfolio' +
 			(terminal.currentPath == '/' ? '' : terminal.currentPath) +
-			'$ '
+			' $ '
 	);
+	const compactPrompt = $derived.by(() => {
+		const path = terminal.currentPath === '/' ? '/top' : terminal.currentPath;
+		const last = path.split('/').filter(Boolean).pop() ?? 'top';
+		return ` ...${last == 'top' ? 'portfolio/' : '/' + last} $ cd top`;
+	});
 
 	function toggleTheme() {
 		theme.toggle();
 	}
 
 	let menuOpen = $state(false);
+
+	let innerWidth = $state(1024);
+	const isNarrow = $derived(innerWidth < 420);
 
 	function toggleMenu() {
 		menuOpen = !menuOpen;
@@ -41,14 +49,21 @@
 	}
 </script>
 
-<header
-	class="fixed flex w-full items-center justify-center border-b-3 border-b-[#08c] bg-[#333333] p-5 py-5 text-white transition-colors duration-300"
->
-	<a href={resolve('/')} aria-label="GotoTop" class="ml-22 truncate pr-4 font-mono"
-		>{currentPrompt}</a
-	>
+<svelte:window bind:innerWidth />
 
-	<nav class="mr-20 ml-auto hidden items-center gap-6 md:flex" aria-label="Global navigation">
+<header
+	class="fixed z-50 flex w-full items-center justify-center border-b-3 border-b-[#08c] bg-[#333333] p-5 py-5 text-white transition-colors duration-300 md:h-max md:w-full md:p-5 md:py-5"
+>
+	<a
+		href={resolve('/')}
+		aria-label="GotoTop"
+		class="ml-1 min-w-0 flex-1 truncate pr-2 font-mono md:mr-auto md:ml-5 md:pr-4"
+	>
+		{isNarrow ? compactPrompt : `${currentPrompt} cd ~/portfolio/top`}
+		<span id="cursor" class="animate-blink ml-1 bg-white px-1"></span>
+	</a>
+
+	<nav class="mr-5 ml-auto hidden items-center gap-6 md:flex" aria-label="Global navigation">
 		{#each links as link (link.id)}
 			<a
 				href={resolve(`/#${link.id}`)}
@@ -61,31 +76,31 @@
 	<button
 		type="button"
 		onclick={toggleTheme}
-		class="rounded-xl border border-[#08c] py-2 pr-4.5 pl-3.5 text-center font-[NerdFont] whitespace-pre outline-0"
+		class="hidden rounded-xl border border-[#08c] py-1 pr-2.5 pl-1.5 text-center font-[NerdFont] whitespace-pre outline-0 md:inline md:py-2 md:pr-4.5 md:pl-3.5"
 	>
 		{theme.isDark ? '  Light' : '  Dark'}
 	</button>
 
 	<button
-		class="relative ml-auto h-9 w-11 shrink-0 md:ml-10"
+		class="relative ml-2 h-6 w-7 shrink-0 md:ml-10 md:h-9 md:w-11"
 		aria-label="Toggle menu"
 		aria-expanded={menuOpen}
 		aria-controls="mobile-menu"
 		onclick={toggleMenu}
 	>
 		<span
-			class="absolute top-0 left-0 h-1.5 w-11 rounded-4xl bg-gray-300 transition-transform duration-200"
-			class:translate-y-3.5={menuOpen}
-			class:rotate-45={menuOpen}
+			class={`absolute top-0 left-0 h-1 w-7 rounded-4xl bg-gray-300 transition-transform duration-200 md:h-1.5 md:w-11 ${
+				menuOpen ? 'translate-y-2.5 rotate-45 md:translate-y-3.5' : ''
+			}`}
 		></span>
 		<span
-			class="absolute top-3.5 left-0 h-1.5 w-11 rounded-4xl bg-gray-300 transition-opacity duration-200"
+			class="absolute top-2.5 left-0 h-1 w-7 rounded-4xl bg-gray-300 transition-opacity duration-200 md:top-3.5 md:h-1.5 md:w-11"
 			class:opacity-0={menuOpen}
 		></span>
 		<span
-			class="absolute top-7 left-0 h-1.5 w-11 rounded-4xl bg-gray-300 transition-transform duration-200"
-			class:-translate-y-3.5={menuOpen}
-			class:-rotate-45={menuOpen}
+			class={`absolute top-5 left-0 h-1 w-7 rounded-4xl bg-gray-300 transition-transform duration-200 md:top-7 md:h-1.5 md:w-11 ${
+				menuOpen ? '-translate-y-2.5 -rotate-45 md:-translate-y-3.5' : ''
+			}`}
 		></span>
 	</button>
 
@@ -103,6 +118,15 @@
 					class:font-bold={isActiveLink(link.id)}>{link.label}</a
 				>
 			{/each}
+			<div class="flex md:hidden">
+				<button
+					type="button"
+					onclick={toggleTheme}
+					class="mt-1 rounded-xl border border-[#08c] py-1 pr-2.5 pl-1.5 text-center font-[NerdFont] whitespace-pre outline-0"
+				>
+					{theme.isDark ? '  Light' : '  Dark'}
+				</button>
+			</div>
 		</nav>
 	{/if}
 </header>

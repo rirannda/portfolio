@@ -11,9 +11,9 @@ async function getHelpText(command: string) {
     return { response: text || `No help available for '${command}'.` };
 }
 
-export const availableCommands = ['help', 'echo', 'cd', 'ls', 'pwd', 'reset', 'whoami', 'date', 'uname', 'reboot', 'sudo', 'su', 'theme', 'fakefetch', 'welcome'];
+export const availableCommands = ['help', 'echo', 'cd', 'ls', 'pwd', 'reset', 'whoami', 'date', 'uname', 'reboot', 'sudo', 'su', 'theme', 'fakefetch', 'welcome', 'open'];
 
-export const availableDirs = ['about', 'featured', 'skills'];
+export const availableDirs = ['top', 'about', 'featured', 'skills', 'contact', 'works'];
 
 export async function parseCommand(input: string, Path: string) {
     // 空白で分割（連続する空白にも対応させるなら正規表現 /\s+/ が便利です）
@@ -37,7 +37,8 @@ export async function parseCommand(input: string, Path: string) {
         'su': 'su',
         'theme': 'theme <light|dark>',
         'fakefetch': 'fakefetch',
-        'welcome': 'welcome'
+        'welcome': 'welcome',
+        'open': 'open [target]',
     };
     const noArgumentsCommands = new Set(['reset', 'whoami', 'date', 'uname', 'reboot', 'fakefetch', 'welcome']);
 
@@ -69,7 +70,7 @@ export async function parseCommand(input: string, Path: string) {
             {
                 // 引数がない場合 (argsが [''] のみの場合)
                 if (args.length === 1 && args[0] === '') {
-                    return { response: 'Available commands: help, cd, date, echo, fakefetch, ls, pwd, reboot, reset, uname, welcome, whoami' };
+                    return { response: 'Available commands: help, cd, date, echo, fakefetch, ls, pwd, reboot, reset, uname, welcome, whoami, open' };
                 }
 
                 const combinedHelpTexts: string[] = [];
@@ -104,7 +105,7 @@ export async function parseCommand(input: string, Path: string) {
                 }
                 let target = (args[0] == '') ? '/' : args[0];
 
-                const sections = ['about', 'skills', 'featured', 'contact'];
+                const sections = ['top', 'about', 'skills', 'featured', 'contact'];
 
                 if (target === '/home/visitor/portfolio') {
                     target = '/';
@@ -228,6 +229,29 @@ export async function parseCommand(input: string, Path: string) {
                     "Feel free to explore and have fun!"
                 ]
             };
+        case 'open': {
+            if (args.length > 1) {
+                return { response: `open: too many arguments. Usage: open [target]`, isError: true };
+            }
+            if (args.length === 0) {
+                return { response: `Usage: open [target]`, isError: true };
+            }
+            const target = args[0].toLowerCase();
+            const links: Record<string, string> = {
+                'github': 'https://github.com/rirannda',
+                'discord': 'https://discord.com/users/924197940103372831',
+            };
+            const textTarget: Record<string, string> = {
+                'github': 'Opening GitHub.com ...',
+                'discord': 'Opening Discord.com ...',
+            };
+            if (target in links) {
+                window.open(links[target], '_blank');
+                return { response: `${textTarget[target]}` };
+            } else {
+                return { response: `open: unknown target '${target}'. Available targets: ${Object.keys(links).join(', ')}`, isError: true };
+            }
+        }
         default:
             return { response: `Command not found: ${command}`, isError: true };
     }

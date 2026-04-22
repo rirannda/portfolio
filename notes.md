@@ -17,7 +17,7 @@
     - [ ]`open github`などでgithubを別タブで開いたり
     - [x]`neofetch`AAが作れれば
     - [x]`reboot`で演出を入れてからリロード
-    - [ ]`theme light`or`dark`でテーマ切り替え(これもバーガーメニュー内にもボタン)
+    - [x]`theme light`or`dark`でテーマ切り替え(これもバーガーメニュー内にもボタン)
 - 読み込み中演出(短め,長いとうざい)
 - 読み込み、reboot演出ともにLinux風、フォントも変える
 
