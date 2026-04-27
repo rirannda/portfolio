@@ -2,6 +2,8 @@
 	import { onMount } from 'svelte';
 	import { terminal } from '$lib/state/terminalState.svelte';
 	import { fade } from 'svelte/transition';
+	import { worksData } from '$lib/data/works';
+	import { resolve } from '$app/paths';
 
 	const quotes = [
 		'Stay Hungry, Stay Foolish - Steve Jobs',
@@ -29,6 +31,8 @@
 		currentQuote = pickRandomQuote(currentQuote);
 		quoteVisible = true;
 	}
+
+	const featuredWorks = worksData.filter((work) => work.isFeatured);
 
 	onMount(() => {
 		currentQuote = quotes[Math.floor(Math.random() * quotes.length)];
@@ -87,7 +91,7 @@
 <div
 	class="mx-auto max-w-screen flex-col justify-center gap-10 px-10 pt-30 text-left align-baseline md:max-w-3/5"
 >
-	<section id="top" class="mb-50 scroll-mt-30 pt-40 md:mb-75 md:pt-50">
+	<section id="top" class="mb-50 scroll-mt-31 pt-40 md:mb-75 md:pt-50">
 		<p class="font-mono text-xl text-green-600 dark:text-green-400">Hi, my name is</p>
 		<h1 class="text-6xl font-bold md:my-3 md:text-9xl">Rirannda</h1>
 		<p class="my-3 text-4xl">O.M.U.C.T. Student.</p>
@@ -114,7 +118,7 @@
 			</a>
 		</div>
 	</section>
-	<section id="about" class="scroll-mt-30 pb-5">
+	<section id="about" class="scroll-mt-31 pb-5">
 		<h2 class="mb-4 border-b border-green-500 text-4xl font-bold md:text-5xl">About Me</h2>
 		<div class="flex md:px-6">
 			<span class="h-auto w-1 rounded-full bg-green-500 text-green-500">|</span>
@@ -132,26 +136,38 @@
 			<p>学友会執行部で...</p>
 		</div>
 	</section>
-	<section id="featured" class="scroll-mt-20 pb-5">
+	<section id="featured" class="scroll-mt-21 pb-5">
 		<h2 class="mb-4 border-b border-green-500 text-4xl font-bold md:text-5xl">Featured-Projects</h2>
-		<div class="pt-2 text-lg md:p-2">
-			<p>概要を表示し、「詳細は Works へ」と誘導します。</p>
-			<p>works</p>
-			<p>works</p>
-			<p>works</p>
-			<p>works</p>
-			<p>works</p>
-			<p>works</p>
-			<p>works</p>
-			<p>works</p>
-			<p>works</p>
-			<p>works</p>
-			<p>works</p>
-			<p>works</p>
-			<p>works</p>
+		<p>取り組んできたプロジェクトの一部です。</p>
+		<div class="my-6 grid grid-cols-1 flex-col gap-6 md:grid-cols-2">
+			{#each featuredWorks as work, i (i)}
+				<div class="grid rounded border border-gray-700 p-4 dark:border-gray-500">
+					<img src={work.image} alt={`Screenshot of {work.name}`} />
+					<div class="row-2">
+						<h3 class="text-2xl font-bold">{work.name}</h3>
+						<p class="mt-2 grow text-lg">{work.description}</p>
+					</div>
+					<div class="row-3 my-2">
+						{#each work.tech as tech, i (i)}
+							<span
+								class="mx-1 rounded-full bg-blue-200 px-2 py-1 font-mono text-lg dark:bg-blue-900"
+							>
+								{tech.label}
+							</span>
+						{/each}
+					</div>
+					<a
+						href={work.repoUrl}
+						target="_blank"
+						class="row-4 mt-2 inline-block rounded border px-2 pr-3 text-center font-[NerdFont] hover:shadow hover:shadow-white/90"
+						rel="noreferrer noopener external"><span class="pr-3 text-2xl"></span>View on GitHub</a
+					>
+				</div>
+			{/each}
 		</div>
+		<a href={resolve('/works')} class="rounded border px-2 py-1">すべてのプロジェクトを見る</a>
 	</section>
-	<section id="skills" class="scroll-mt-20 pb-5">
+	<section id="skills" class="scroll-mt-21 pb-5">
 		<h2 class="mb-4 border-b border-green-500 text-4xl font-bold md:text-5xl">Skills</h2>
 		<div class="pt-2 text-lg md:p-2">
 			<p>ここにSkillsの内容を移動します。</p>
@@ -167,7 +183,7 @@
 			<p>skill</p>
 		</div>
 	</section>
-	<section id="contact" class="scroll-mt-20 pb-5">
+	<section id="contact" class="scroll-mt-21 pb-5">
 		<h2 class="mb-4 border-b border-green-500 text-4xl font-bold md:text-5xl">Contact</h2>
 		<div class="pt-2 text-lg md:p-2">
 			<p>contact</p>
