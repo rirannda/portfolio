@@ -80,5 +80,4 @@ Rebooting PortfolioOS v0.0.0 ...
 - [x] ターミナル入力ラインの最小化(起動時はヘッダーと内容とコマンドライン出現ボタンのみ、出現ボタンでコマンドラインと履歴最大化ボタンを配置して出現ボタンを隠す)
 - [ ] lang=EN(優先度低)
 - [ ] update works(tite,images,discriptions,etc...)
-- [ ] スクロールしたら文字が出てくるアニメーション
 - [ ] featured,works内でスクリーンショットをスライドショーにする

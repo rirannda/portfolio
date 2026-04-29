@@ -6,6 +6,7 @@
 	import { resolve } from '$app/paths';
 	import { skillsData } from '$lib/data/skills';
 	import WorkCard from '$lib/components/WorkCard.svelte';
+	import SkillCard from '$lib/components/SkillCard.svelte';
 
 	const quotes = [
 		'Stay Hungry, Stay Foolish - Steve Jobs',
@@ -35,6 +36,18 @@
 	}
 
 	const featuredWorks = worksData.filter((work) => work.isFeatured);
+
+	const skillFilters = ['All', 'Language', 'Framework & Library', 'Tools', 'Others'];
+
+	let activeSkillFilter = $state('All');
+
+	const filteredSkills = $derived(
+		activeSkillFilter === 'All'
+			? skillsData
+			: activeSkillFilter === 'Framework & Library'
+				? skillsData.filter((skill) => skill.group === 'Framework' || skill.group === 'Library')
+				: skillsData.filter((skill) => skill.group === activeSkillFilter)
+	);
 
 	onMount(() => {
 		currentQuote = quotes[Math.floor(Math.random() * quotes.length)];
@@ -113,7 +126,7 @@
 				View projects 
 			</a>
 			<a
-				class="block w-fit rounded-2xl border border-[#08c] bg-[#08c]/10 px-5 py-4 font-[NerdFont] text-lg font-bold transition-all duration-150 hover:bg-[#08c]/95 md:inline"
+				class="bg-archlinux/10 border-archlinux hover:bg-archlinux/95 block w-fit rounded-2xl border px-5 py-4 font-[NerdFont] text-lg font-bold transition-all duration-150 md:inline"
 				href="#contact"
 			>
 				Contact me
@@ -155,14 +168,38 @@
 	<section id="skills" class="scroll-mt-21 pb-5">
 		<h2 class="mb-4 border-b border-green-500 text-4xl font-bold md:text-5xl">Skills</h2>
 		<p class="text-lg">現在までに習得した技術スタック</p>
+		<div class="my-6 flex flex-wrap gap-3 md:px-2">
+			{#each skillFilters as filter, i (i)}
+				<button
+					onclick={() => (activeSkillFilter = filter)}
+					class={`cursor-pointer rounded-full border px-4 py-1 font-mono  font-bold transition-all duration-300 ${
+						activeSkillFilter === filter
+							? 'border-green-500 bg-green-500 text-black dark:text-[#0c0c0c]' // 選択中
+							: 'border-gray-500 text-gray-600 hover:border-green-500 hover:text-green-500 dark:text-gray-400' // 非選択
+					} outline-0`}
+				>
+					<spa class="text-lg"
+						>{filter === 'All'
+							? ''
+							: filter === 'Language'
+								? ''
+								: filter === 'Framework & Library'
+									? ''
+									: filter === 'Tools'
+										? ''
+										: ''}</spa
+					>
+					{filter}
+				</button>
+			{/each}
+		</div>
+
 		<div class="pt-2 text-lg md:p-2">
-			<div class="grid rounded border border-gray-700 p-4 dark:border-gray-500">
-				{#each skillsData as skill, i (i)}
-					<div>
-						<div class="">{skill.logo}</div>
-						<h3 class="text-2xl font-bold">{skill.name}</h3>
-						<p class="mt-2 grow text-lg">{skill.description}</p>
-					</div>
+			<div
+				class="grid grid-cols-1 gap-8 rounded border border-gray-700 p-4 md:grid-cols-4 dark:border-gray-500"
+			>
+				{#each filteredSkills as skill (skill.id)}
+					<SkillCard {skill} />
 				{/each}
 			</div>
 		</div>
