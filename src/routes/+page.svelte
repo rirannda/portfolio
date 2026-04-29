@@ -145,6 +145,9 @@
 				<p class="w-fit text-xl md:hidden">知能情報コース 2年生</p>
 				<p class="w-fit text-xl">学友会執行部 所属</p>
 			</div>
+			<div>
+				<p>Linux user</p>
+			</div>
 		</div>
 		<div class="pt-2 text-lg md:p-2">
 			<p>知能情報コースで...</p>
