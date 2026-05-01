@@ -49,6 +49,20 @@
 				: skillsData.filter((skill) => skill.group === activeSkillFilter)
 	);
 
+	const parts = ['rg24010r', 'st', 'omu', 'ac', 'jp'];
+	const email = `${parts[0] + '@' + parts[1] + '.' + parts[2] + '.' + parts[3] + '.' + parts[4]}`;
+	let copyStatus = $state('');
+	function copyMail() {
+		navigator.clipboard.writeText(email).then(
+			() => {
+				copyStatus = ': Copying successful.';
+			},
+			() => {
+				copyStatus = ': Copy failed.';
+			}
+		);
+	}
+
 	onMount(() => {
 		currentQuote = quotes[Math.floor(Math.random() * quotes.length)];
 
@@ -173,6 +187,9 @@
 	<section id="skills" class="scroll-mt-21 pb-5">
 		<h2 class="mb-4 border-green-500 text-4xl font-bold md:text-5xl border-b">Skills</h2>
 		<p class="text-lg">現在までに習得した技術スタック</p>
+		<p class="ml-2 font-mono text-gray-700 dark:text-gray-300 italic">
+			クリックすると詳細が見られます。
+		</p>
 		<div class="my-6 gap-3 md:px-2 flex flex-wrap">
 			{#each skillFilters as filter, i (i)}
 				<button
@@ -210,19 +227,32 @@
 		</div>
 	</section>
 	<section id="contact" class="scroll-mt-21 pb-5">
-		<h2 class="mb-4 border-green-500 text-4xl font-bold md:text-5xl border-b">Contact</h2>
+		<h2 class="mb-4 border-green-500 text-4xl font-bold md:text-5xl border-b">Contact Me</h2>
 		<div class="pt-2 text-lg md:p-2">
-			<p>contact</p>
-			<p>contact</p>
-			<p>contact</p>
-			<p>contact</p>
-			<p>contact</p>
-			<p>contact</p>
-			<p>contact</p>
-			<p>contact</p>
-			<p>contact</p>
-			<p>contact</p>
-			<p>contact</p>
+			<div class="flex" id="email">
+				<span class="text-xl font-bold px-1">
+					<span class="pr-2 font-[NerdFont]"></span>
+					Email :
+				</span>
+				<span class="px-2">rg24010r [at] st.omu.ac.jp</span>
+				<button
+					class="ml-5 bg-archlinux/10 border-archlinux hover:bg-archlinux/95 rounded-xl font-bold px-2 py-0.5 font-mono block w-fit border outline-0 transition-all duration-150"
+					onclick={copyMail}
+				>
+					Copy
+				</button>
+				<span class="ml-2 font-bold">{copyStatus}</span>
+			</div>
+			<div class="text-xl flex" id="accounts">
+				<a
+					href="https://github.com/rirannda"
+					class="px-2 rounded font-mono mx-2 w-fit border"
+					rel="external"
+				>
+					<span class=" text-2xl font-[NerdFont]"></span>
+					rirannda
+				</a>
+			</div>
 		</div>
 	</section>
 </div>

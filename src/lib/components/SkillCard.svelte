@@ -159,32 +159,32 @@
 <svelte:window onkeydown={handleKeydown} />
 
 <button
-	class={`group flex w-full cursor-pointer flex-col rounded-lg border border-gray-300 bg-white/50 p-5 text-left outline-0 backdrop-blur-sm transition-all ${skillColors.hoverBorder} dark:border-gray-700 dark:bg-black/20`}
+	class={`group rounded-lg border-gray-300 bg-white/50 p-5 backdrop-blur-sm flex w-full cursor-pointer flex-col border text-left outline-0 transition-all ${skillColors.hoverBorder} dark:border-gray-700 dark:bg-black/20`}
 	onclick={openModal}
 >
-	<div class="mb-4 flex items-center gap-4">
-		<span class={`font-[NerdFont] text-4xl transition-colors ${skillColors.hoverText}`}
+	<div class="mb-4 gap-4 flex items-center">
+		<span class={`text-4xl font-[NerdFont] transition-colors ${skillColors.hoverText}`}
 			>{skill.logo}</span
 		>
-		<h3 class={`text-xl font-bold transition-colors ${skillColors.hoverText}`}>
+		<h3 class={`text-xl font-bold font-mono transition-colors ${skillColors.hoverText}`}>
 			{skill.name}
 		</h3>
 	</div>
 
-	<div class="mb-2 h-2 w-full overflow-hidden rounded-full bg-gray-200 dark:bg-gray-800">
+	<div class="mb-2 h-2 bg-gray-200 dark:bg-gray-800 w-full overflow-hidden rounded-full">
 		<div
-			class="h-2 rounded-full {progressColor} transition-all duration-1000 ease-out"
+			class="h-2 rounded-full {progressColor} ease-out transition-all duration-1000"
 			style="width: {progressWidth};"
 		></div>
 	</div>
-	<div class="text-right font-mono text-xs opacity-70">{skill.level}</div>
+	<div class="font-mono text-xs text-right opacity-70">{skill.level}</div>
 </button>
 
 {#if isModalOpen}
-	<div class="fixed inset-0 z-100 flex items-center justify-center p-4">
+	<div class="inset-0 p-4 fixed z-100 flex items-center justify-center">
 		<button
 			type="button"
-			class="absolute inset-0 bg-black/60 backdrop-blur-sm"
+			class="inset-0 bg-black/60 backdrop-blur-sm absolute"
 			onclick={closeModal}
 			aria-label="Close modal"
 		></button>
@@ -193,30 +193,30 @@
 			role="dialog"
 			aria-modal="true"
 			aria-labelledby="skill-modal-title"
-			class="relative z-10 w-full max-w-md transform rounded-xl border border-gray-300 bg-gray-100 p-6 shadow-2xl transition-transform dark:border-gray-700 dark:bg-[#111111]"
+			class="max-w-md rounded-xl border-gray-300 bg-gray-100 p-6 shadow-2xl dark:border-gray-700 relative z-10 w-full transform border transition-transform dark:bg-[#111111]"
 		>
 			<button
 				type="button"
-				class="absolute top-4 right-4 cursor-pointer font-[NerdFont] text-2xl text-gray-500 transition-colors hover:text-black dark:hover:text-white"
+				class="top-4 right-4 text-2xl text-gray-500 hover:text-black dark:hover:text-white absolute cursor-pointer font-[NerdFont] transition-colors"
 				onclick={closeModal}
 				aria-label="Close modal"
 			>
 				
 			</button>
 
-			<div class="mb-6 flex items-center gap-4">
-				<span class={`font-[NerdFont] text-6xl ${skillColors.text}`}>{skill.logo}</span>
-				<div>
+			<div class="mb-6 gap-4 flex items-center">
+				<span class={`text-6xl font-[NerdFont] ${skillColors.text}`}>{skill.logo}</span>
+				<div class="pl-2">
 					<h3 id="skill-modal-title" class="mb-1 text-2xl font-bold">{skill.name}</h3>
 					<span
-						class="inline-block rounded px-2 py-1 text-xs font-semibold text-white {progressColor}"
+						class="rounded px-2 py-1 text-xs font-semibold text-white inline-block {progressColor}"
 					>
 						{skill.level}
 					</span>
 				</div>
 			</div>
 
-			<p class="mb-8 leading-relaxed opacity-90 md:text-base">
+			<p class="mb-8 leading-relaxed md:text-base opacity-90">
 				{skill.description}
 			</p>
 
@@ -224,7 +224,7 @@
 				href={skill.url}
 				target="_blank"
 				rel="noopener noreferrer external"
-				class="block w-full rounded border border-gray-400 px-4 py-2 text-center font-mono text-lg font-bold transition-colors hover:bg-gray-200 dark:hover:bg-gray-800"
+				class="rounded border-gray-400 px-4 py-2 font-mono text-lg font-bold hover:bg-gray-200 dark:hover:bg-gray-800 block w-full border text-center transition-colors"
 			>
 				{skill.urltext}
 			</a>
