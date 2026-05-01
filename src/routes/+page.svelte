@@ -209,7 +209,7 @@
 							: 'border-gray-500 text-gray-600 hover:border-green-500 hover:text-green-500 dark:text-gray-400' // 非選択
 					} outline-0`}
 				>
-					<spa class="md:text-lg"
+					<span class="md:text-lg font-[NerdFont]"
 						>{filter === 'All'
 							? ''
 							: filter === 'Language'
@@ -218,7 +218,7 @@
 									? ''
 									: filter === 'Tools'
 										? ''
-										: ''}</spa
+										: ''}</span
 					>
 					{filter}
 				</button>
