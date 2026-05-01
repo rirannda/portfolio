@@ -1,11 +1,11 @@
-# rirannda's Portfolio (PortfoliOS)
+# PortfoliOS (rirannda's Portfolio)
 
 Please access from [my portfolio website](https://rirannda.github.io).
 
 ## About This
 
-ターミナル風のCUIインターフェースを備えた、ポートフォリオサイトです。
-通常のスクロールやクリックによる操作に加え、画面下部のコマンドラインからUNIXライクなコマンドを入力してサイト内を操作できるギミックを搭載しています。
+This is a portfolio website featuring a terminal-style CUI (Character User Interface).
+In addition to standard scrolling and clicking, it includes a gimmick that allows users to navigate the site by entering UNIX-like commands via a command line at the bottom of the screen.
 
 ## Tech Stack
 
