@@ -126,7 +126,7 @@
 		<p class="my-3 text-4xl">O.M.U.C.T. Student.</p>
 		{#if quoteVisible}
 			<p
-				class="py-5 font-serif text-2xl text-black italic transition-opacity duration-200 dark:text-[#e4e4e4]/70"
+				class="py-5 font-serif text-2xl text-black dark:text-lighttext/70 italic transition-opacity duration-200"
 				transition:fade
 			>
 				{currentQuote}
@@ -246,10 +246,11 @@
 			<div class="text-xl flex" id="accounts">
 				<a
 					href="https://github.com/rirannda"
-					class="px-2 rounded font-mono mx-2 w-fit border"
+					class="px-3 rounded-2xl mx-2 bg-github/10 border-github hover:bg-github/95 py-1 text-lg font-bold md:inline block w-fit border font-[NerdFont] transition-all duration-150"
+					target="_blank"
 					rel="external"
 				>
-					<span class=" text-2xl font-[NerdFont]"></span>
+					<span class="pr-1 text-2xl font-[NerdFont]"></span>
 					rirannda
 				</a>
 			</div>

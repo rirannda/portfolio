@@ -1,11 +1,14 @@
 @import 'tailwindcss';
 
 @theme {
+	--color-lighttext: #e4e4e4;
+	--color-darktext: #1e1e1e;
 	--color-html: #e44c20;
 	--color-typescript: #3577c4;
 	--color-javascript: #f6df1f;
 	--color-css: #673299;
 	--color-python: #fed34d;
+	--color-python-dark: #3971a1;
 	--color-rust: #e43616;
 	--color-svelte: #ff4000;
 	--color-react: #59c3db;
@@ -22,6 +25,12 @@
 }
 
 @layer utilities {
+	.text-lighttext {
+		color: var(--color-lighttext);
+	}
+	.text-darktext {
+		color: var(--color-darktext);
+	}
 	.bg-html {
 		background-color: var(--color-html);
 	}
@@ -70,6 +79,15 @@
 	}
 	.border-python {
 		border-color: var(--color-python);
+	}
+	.bg-python-dark {
+		background-color: var(--color-python-dark);
+	}
+	.text-python-dark {
+		color: var(--color-python-dark);
+	}
+	.border-python-dark {
+		border-color: var(--color-python-dark);
 	}
 
 	.bg-rust {
@@ -217,8 +235,8 @@
 
 	/* ライトモードの時の変数 */
 	:root {
-		--bg-color: #fafafa;
-		--text-color: #222222;
+		--bg-color: #f5f5f5;
+		--text-color: #1e1e1e;
 	}
 
 	/* ダークモードの時の変数 */

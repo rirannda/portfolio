@@ -3,7 +3,7 @@ export type Work = {
     name: string;
     images: string[];     // スクリーンショットのパス
     description: string;
-    tech: { color: string; label: string }[]
+    tech: { bg: string, textColor: string, label: string }[]
     repoUrl: string;
     isFeatured: boolean; // trueのものはトップページにも表示する
 };
@@ -15,9 +15,9 @@ export const worksData: Work[] = [
         images: ['/images/portfolio.png'],
         description: '本ポートフォリオサイト。Svelte5で実装。コマンドラインから実際にサイト内を操作できるギミックを搭載しました。',
         tech: [
-            { color: 'svelte', label: ' Svelte' },
-            { color: 'tailwind', label: '󱏿 Tailwind CSS' },
-            { color: 'typescript', label: ' TypeScript' }
+            { bg: 'svelte', textColor: 'lighttext', label: ' Svelte' },
+            { bg: 'tailwind', textColor: 'lighttext', label: '󱏿 Tailwind CSS' },
+            { bg: 'typescript', textColor: 'lighttext', label: ' TypeScript' }
         ],
         repoUrl: 'https://github.com/rirannda/portfolio',
         isFeatured: true
@@ -28,8 +28,8 @@ export const worksData: Work[] = [
         images: ['/images/app-a.png'],
         description: 'Reactで作ったすごいアプリ。',
         tech: [
-            { color: 'react', label: ' React' },
-            { color: 'typescript', label: ' TypeScript' }
+            { bg: 'react', textColor: 'lighttext', label: ' React' },
+            { bg: 'typescript', textColor: 'lighttext', label: ' TypeScript' }
         ],
         repoUrl: 'https://github.com/rirannda/app-a',
         isFeatured: true
@@ -40,7 +40,7 @@ export const worksData: Work[] = [
         images: ['/images/tool-b.png'],
         description: 'Pythonで作った便利なスクリプト。',
         tech: [
-            { color: 'python', label: ' Python' }
+            { bg: 'python', textColor: 'python-dark', label: ' Python' }
         ],
         repoUrl: 'https://github.com/rirannda/tool-b',
         isFeatured: false
