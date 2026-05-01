@@ -122,10 +122,10 @@
 
 <svelte:window bind:innerWidth />
 
-<div id="terminalWrapper" class="sticky right-0 bottom-0 z-100">
+<div id="terminalWrapper" class="right-0 bottom-0 sticky z-100">
 	{#if isExpanded}
 		<div
-			class={`${!terminal.isLineExpanded ? 'hidden' : ''} fixed top-16 right-0 bottom-16 left-0 z-50 mt-1 overflow-x-auto overflow-y-auto bg-gray-200/90 p-3 font-mono text-sm text-black transition-colors duration-300 md:top-18 md:bottom-10 md:p-5 md:text-base dark:bg-[#0c0c0c]/90 dark:text-[#e4e4e4]`}
+			class={`${!terminal.isLineExpanded ? 'hidden' : ''} top-16 right-0 bottom-16 left-0 mt-1 bg-gray-200/90 p-3 font-mono text-sm text-black md:top-18 md:bottom-10 md:p-5 md:text-base dark:text-lighttext fixed z-50 overflow-x-auto overflow-y-auto transition-colors duration-300 dark:bg-[#0c0c0c]/90`}
 		>
 			{#each terminal.output as line, i (i)}
 				<div class="mb-2">
@@ -142,7 +142,7 @@
 		</div>
 	{:else}
 		<div
-			class={`fixed ${!terminal.isLineExpanded ? 'pointer-events-none translate-y-4 opacity-0' : 'pointer-events-auto translate-y-0 opacity-100'} bottom-20 z-25 w-full overflow-x-auto border-t border-t-gray-700 bg-gray-200 px-3 pt-2 font-mono text-sm transition-all duration-300 md:bottom-13 md:px-5 md:text-base dark:bg-[#0c0c0c] dark:text-[#e4e4e4]`}
+			class={`fixed ${!terminal.isLineExpanded ? 'translate-y-4 pointer-events-none opacity-0' : 'translate-y-0 pointer-events-auto opacity-100'} bottom-20 border-t-gray-700 bg-gray-200 px-3 pt-2 font-mono text-sm md:bottom-13 md:px-5 md:text-base dark:text-lighttext z-25 w-full overflow-x-auto border-t transition-all duration-300 dark:bg-[#0c0c0c]`}
 			transition:fly={{ y: 16, duration: 220 }}
 		>
 			{#if latest == undefined}
@@ -162,38 +162,38 @@
 	{/if}
 	<form
 		onsubmit={handleSubmit}
-		class={`${!terminal.isLineExpanded ? 'pointer-events-none translate-y-4 opacity-0' : 'pointer-events-auto translate-y-0 opacity-100'} fixed right-0 bottom-0 left-0 z-50 bg-gray-200 p-2 font-mono transition-all duration-300 dark:bg-[#0c0c0c] dark:text-[#e4e4e4]`}
+		class={`${!terminal.isLineExpanded ? 'translate-y-4 pointer-events-none opacity-0' : 'translate-y-0 pointer-events-auto opacity-100'} right-0 bottom-0 left-0 bg-gray-200 p-2 font-mono dark:text-lighttext fixed z-50 transition-all duration-300 dark:bg-[#0c0c0c]`}
 		transition:fly={{ y: 16, duration: 220 }}
 	>
-		<div class="flex w-full flex-col gap-2 md:flex-row md:items-center md:px-3">
-			<div class="flex w-full min-w-0 items-center">
-				<span class="shrink-0 text-sm md:text-base">{isNarrow ? compactPrompt : currentPrompt}</span
+		<div class="gap-2 md:flex-row md:items-center md:px-3 flex w-full flex-col">
+			<div class="min-w-0 flex w-full items-center">
+				<span class="text-sm md:text-base shrink-0">{isNarrow ? compactPrompt : currentPrompt}</span
 				>
 				<input
 					type="text"
 					bind:value={inputValue}
 					onkeydown={handleKeydown}
-					class="w-full min-w-0 flex-1 pl-2 text-sm outline-0 md:pl-3 md:text-base"
+					class="min-w-0 pl-2 text-sm md:pl-3 md:text-base w-full flex-1 outline-0"
 				/>
 			</div>
 			<div
-				class="right-0 grid w-full grid-cols-3 gap-2 md:w-auto md:auto-cols-max md:grid-flow-col md:grid-cols-none md:gap-1"
+				class="right-0 gap-2 md:w-auto md:auto-cols-max md:grid-flow-col md:grid-cols-none md:gap-1 grid w-full grid-cols-3"
 			>
 				<input
 					type="submit"
-					class="rounded border border-gray-400 px-2 py-1 text-sm font-bold outline-0 md:border-0 md:px-3"
+					class="rounded border-gray-400 px-2 py-1 text-sm font-bold md:border-0 md:px-3 border outline-0"
 					value="Run"
 				/>
 				<button
 					type="button"
 					onclick={toggleExpand}
-					class="rounded border border-gray-400 px-2 py-1 text-center font-[NerdFont] text-lg font-bold md:border-0 md:px-3"
+					class="rounded border-gray-400 px-2 py-1 text-lg font-bold md:border-0 md:px-3 border text-center font-[NerdFont]"
 					>󰄿</button
 				>
 				<button
 					type="button"
 					onclick={toggleTerminal}
-					class="border border-gray-400 px-2 py-1 text-center font-[NerdFont] text-base md:right-0 md:border-t-0 md:border-r-0 md:border-b-0 md:border-l md:border-l-gray-400 md:pl-4"
+					class="border-gray-400 px-2 py-1 text-base md:right-0 md:border-t-0 md:border-r-0 md:border-b-0 md:border-l md:border-l-gray-400 md:pl-4 border text-center font-[NerdFont]"
 					></button
 				>
 			</div>
@@ -202,7 +202,7 @@
 	<button
 		type="button"
 		onclick={toggleTerminal}
-		class={`${terminal.isLineExpanded ? 'hidden' : ''} absolute right-0 bottom-0 z-100 h-14 w-14 rounded-t-2xl rounded-bl-2xl border-t-2 border-l-2 border-gray-500 bg-gray-200 p-2.5 pl-1 font-[NerdFont] text-3xl shadow-none shadow-gray-700 transition-all hover:shadow-xl md:h-17 md:w-17 md:p-3.5 dark:bg-[#0c0c0c] dark:text-[#e4e4e4] dark:shadow-gray-400`}
+		class={`${terminal.isLineExpanded ? 'hidden' : ''} right-0 bottom-0 h-14 w-14 rounded-t-2xl rounded-bl-2xl border-gray-500 bg-gray-200 p-2.5 pl-1 text-3xl shadow-gray-700 hover:shadow-xl md:h-17 md:w-17 md:p-3.5 dark:text-lighttext dark:shadow-gray-400 absolute z-100 border-t-2 border-l-2 font-[NerdFont] shadow-none transition-all dark:bg-[#0c0c0c]`}
 		></button
 	>
 </div>

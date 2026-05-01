@@ -8,6 +8,11 @@
 	import WorkCard from '$lib/components/WorkCard.svelte';
 	import SkillCard from '$lib/components/SkillCard.svelte';
 
+	import { langState } from '$lib/state/langState.svelte';
+	import { dict } from '$lib/i18n/dict';
+
+	const t = $derived(dict[langState.current]);
+
 	const quotes = [
 		'Stay Hungry, Stay Foolish - Steve Jobs',
 		'Keep It Simple Stupid - Kelly Johnson',
@@ -152,27 +157,31 @@
 		<div class="md:px-6 flex">
 			<span class="w-1 bg-green-500 text-green-500 h-auto rounded-full">|</span>
 			<div class="px-2 py-1 md:ml-1 flex-col">
-				<p class="text-xl md:inline hidden w-fit">
-					大阪公立大学工業高等専門学校 知能情報コース/ 2年生
+				<p class="text-xl inline w-fit">
+					<span class="text-sm pr-[0.5em] font-[NerdFont]"></span>
+					{t.about.school}
+					<span class="md:hidden block"></span>
+					<span class="md:inline hidden">:</span>
+					{t.about.courseGrade}
 				</p>
-				<p class="text-xl md:hidden w-fit">大阪公立大学工業高等専門学校</p>
-				<p class="text-xl md:hidden w-fit">知能情報コース/ 2年生</p>
-				<p class="text-xl w-fit">学友会執行部 所属</p>
+				<p class="text-xl py-2 w-fit">
+					<span class="text-sm pr-[0.5em] font-[NerdFont]"></span>
+					{t.about.osakaSa}
+				</p>
 			</div>
 		</div>
 
 		<div class="pt-2 text-lg md:p-2">
-			<p class="py-0.5">知能情報コースでAIなどの最新技術や実践的なプログラミングを学んでいます。</p>
-			<p class="py-0.5">学友会執行部ではWeb開発に関わりつつ行事の企画・運営に携わっています。</p>
+			<p class="py-0.5">{t.about.descCourse}</p>
+			<p class="py-0.5">{t.about.descOsakaSa}</p>
 			<p class="py-0.5">
-				また、プライベートではLinux環境(特にArch
-				Linux)を愛用しており、ターミナル作業の効率化などを楽しんでいます。
+				{t.about.descPrivate}
 			</p>
 		</div>
 	</section>
 	<section id="featured" class="mb-5 scroll-mt-21 pb-10">
 		<h2 class="mb-4 border-green-500 text-4xl font-bold md:text-5xl border-b">Featured-Projects</h2>
-		<p class="text-lg">取り組んできたプロジェクトの一部です。</p>
+		<p class="text-lg">{t.featuredPj.desc}</p>
 		<div class="my-6 gap-6 md:grid-cols-2 grid grid-cols-1 flex-col">
 			{#each featuredWorks as work, i (i)}
 				<WorkCard {work} />
@@ -181,14 +190,14 @@
 		<a
 			href={resolve('/works')}
 			class="rounded border-green-500 bg-green-500/10 px-4 py-3 hover:bg-green-500/85 border"
-			>すべてのプロジェクトを見る</a
+			>{t.featuredPj.viewAll}</a
 		>
 	</section>
 	<section id="skills" class="scroll-mt-21 pb-5">
 		<h2 class="mb-4 border-green-500 text-4xl font-bold md:text-5xl border-b">Skills</h2>
-		<p class="text-lg">現在までに習得した技術スタック</p>
+		<p class="text-lg">{t.skills.desc}</p>
 		<p class="ml-2 font-mono text-gray-700 dark:text-gray-300 italic">
-			クリックすると詳細が見られます。
+			{t.skills.viewDetails}
 		</p>
 		<div class="my-6 gap-3 md:px-2 flex flex-wrap">
 			{#each skillFilters as filter, i (i)}

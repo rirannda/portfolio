@@ -3,6 +3,10 @@
 	import { terminal } from '$lib/state/terminalState.svelte';
 	import { worksData } from '$lib/data/works';
 	import WorkCard from '$lib/components/WorkCard.svelte';
+	import { langState } from '$lib/state/langState.svelte';
+	import { dict } from '$lib/i18n/dict';
+
+	const t = $derived(dict[langState.current]);
 
 	onMount(() => {
 		const sections = Array.from(document.querySelectorAll<HTMLElement>('section[id]'));
@@ -52,15 +56,14 @@
 </script>
 
 <div
-	class="mx-auto max-w-screen flex-col justify-center gap-10 px-10 pt-30 text-left align-baseline md:max-w-3/5"
+	class="gap-10 px-10 pt-30 md:max-w-3/5 mx-auto max-w-screen flex-col justify-center text-left align-baseline"
 >
 	<section id="works" class="scroll-mt-30 pb-5">
-		<h2 class="mb-4 border-b border-green-500 text-4xl font-bold md:text-5xl">Works</h2>
+		<h2 class="mb-4 border-green-500 text-4xl font-bold md:text-5xl border-b">Works</h2>
 		<p>
-			完成したプロジェクトに加え、現在進行中の取り組みも掲載しています。
-			継続的な改善と学習を通して、より良いアウトプットを目指しています。
+			{t.works.desc}
 		</p>
-		<div class="my-6 grid grid-cols-1 flex-col gap-6 md:grid-cols-2">
+		<div class="my-6 gap-6 md:grid-cols-2 grid grid-cols-1 flex-col">
 			{#each worksData as work, i (i)}
 				<WorkCard {work} />
 			{/each}

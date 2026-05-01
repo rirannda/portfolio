@@ -1,5 +1,6 @@
 <script lang="ts">
 	import type { Skill } from '$lib/data/skills';
+	import { langState } from '$lib/state/langState.svelte';
 	let { skill }: { skill: Skill } = $props();
 
 	type SkillColorKey =
@@ -119,25 +120,27 @@
 	};
 
 	const skillColors = $derived(colorClasses[skill.color as SkillColorKey] ?? colorClasses.svelte);
-
-	// モーダルの開閉状態
-	let isModalOpen = $state(false);
-
-	// 熟練度に応じたプログレスバーの幅
+	const currentLevel = $derived(skill.level[langState.current]);
+	const currentDescription = $derived(skill.description[langState.current]);
 	const progressWidth = $derived(
-		skill.level === '上級'
+		currentLevel === '上級' || currentLevel === 'advanced'
 			? '100%'
-			: skill.level === '中級'
+			: currentLevel === '中級' || currentLevel === 'intermediate'
 				? '66%'
-				: skill.level === '初級'
+				: currentLevel === '初級' || currentLevel === 'beginner'
 					? '33%'
 					: '10%'
 	);
-
-	// 熟練度に応じた色
 	const progressColor = $derived(
-		skill.level === '上級' ? 'bg-green-500' : skill.level === '中級' ? 'bg-blue-500' : 'bg-gray-400'
+		currentLevel === '上級' || currentLevel === 'advanced'
+			? 'bg-green-500'
+			: currentLevel === '中級' || currentLevel === 'intermediate'
+				? 'bg-blue-500'
+				: 'bg-gray-400'
 	);
+
+	// モーダルの開閉状態
+	let isModalOpen = $state(false);
 
 	function openModal() {
 		isModalOpen = true;
@@ -178,7 +181,7 @@
 			style="width: {progressWidth};"
 		></div>
 	</div>
-	<div class="font-mono text-xs text-right opacity-70">{skill.level}</div>
+	<div class="font-mono text-xs text-right opacity-70">{currentLevel}</div>
 </button>
 
 {#if isModalOpen}
@@ -212,13 +215,13 @@
 					<span
 						class="rounded px-2 py-1 text-xs font-semibold text-white inline-block {progressColor}"
 					>
-						{skill.level}
+						{currentLevel}
 					</span>
 				</div>
 			</div>
 
 			<p class="mb-8 leading-relaxed md:text-base opacity-90">
-				{skill.description}
+				{currentDescription}
 			</p>
 
 			<a

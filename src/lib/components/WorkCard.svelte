@@ -1,8 +1,11 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import type { Work } from '$lib/data/works';
+	import { langState } from '$lib/state/langState.svelte';
 
 	let { work }: { work: Work } = $props();
+
+	const currentDescription = $derived(work.description[langState.current]);
 
 	let currentIndex = $state(0);
 
@@ -42,7 +45,7 @@
 		</h3>
 
 		<p class="mb-4 text-lg grow opacity-80">
-			{work.description}
+			{currentDescription}
 		</p>
 
 		<div class="my-2 row-3 opacity-90">

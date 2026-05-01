@@ -3,6 +3,7 @@
 	import { page } from '$app/state';
 	import { terminal } from '$lib/state/terminalState.svelte';
 	import { theme } from '$lib/state/themeState.svelte';
+	import { langState, toggleLang } from '$lib/state/langState.svelte';
 
 	const currentPrompt = $derived(
 		'visitor@PortfoliOS:~/portfolio' +
@@ -82,6 +83,16 @@
 	</button>
 
 	<button
+		type="button"
+		onclick={toggleLang}
+		class="border-archlinux rounded-xl py-1 pr-2.5 pl-1.5 md:inline md:py-1.5 md:px-3 md:ml-3 font-bold hidden border text-center whitespace-pre outline-0"
+	>
+		<span class="pr-3 text-lg font-normal font-[NerdFont]"></span>{langState.current === 'ja'
+			? 'EN'
+			: 'JP'}
+	</button>
+
+	<button
 		class="ml-2 h-6 w-7 md:ml-10 md:h-9 md:w-11 relative shrink-0 outline-0"
 		aria-label="Toggle menu"
 		aria-expanded={menuOpen}
@@ -125,6 +136,17 @@
 					class="border-archlinux mt-1 rounded-xl py-1 pr-2.5 pl-1.5 border text-center font-[NerdFont] whitespace-pre outline-0"
 				>
 					{theme.isDark ? '  Light' : '  Dark'}
+				</button>
+			</div>
+			<div class="md:hidden mt-1 flex">
+				<button
+					type="button"
+					onclick={toggleLang}
+					class="border-archlinux mt-1 rounded-xl py-1 pr-2.5 pl-1.5 border text-center font-[NerdFont] whitespace-pre outline-0"
+				>
+					<span class="pr-3 text-lg font-normal font-[NerdFont]"></span>{langState.current === 'ja'
+						? 'EN'
+						: 'JP'}
 				</button>
 			</div>
 		</nav>
