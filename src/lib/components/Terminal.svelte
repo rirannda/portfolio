@@ -166,7 +166,7 @@
 	{/if}
 	<form
 		onsubmit={handleSubmit}
-		class="right-0 bottom-0 left-0 bg-gray-200 p-2 font-mono dark:text-lighttext fixed z-50 transition-all duration-300 dark:bg-[#0c0c0c]"
+		class="right-0 bottom-0 left-0 bg-gray-200 p-2 font-mono dark:text-lighttext pt-8 fixed z-50 transition-all duration-300 dark:bg-[#0c0c0c]"
 		class:commandline-enable={terminal.isTerminalEnabled}
 		class:commandline-disable={!terminal.isTerminalEnabled}
 		transition:fly={{ y: 16, duration: 220 }}
@@ -193,13 +193,13 @@
 				<button
 					type="button"
 					onclick={toggleExpand}
-					class="rounded border-gray-400 px-2 py-1 text-lg font-bold md:border-0 md:px-3 border text-center font-[NerdFont]"
+					class="rounded border-gray-400 px-2 py-1 text-lg font-bold md:border-0 md:px-3 border text-center font-[NerdFont] outline-0"
 					>󰄿</button
 				>
 				<button
 					type="button"
 					onclick={toggleTerminal}
-					class="border-gray-400 px-2 py-1 text-base md:right-0 md:border-t-0 md:border-r-0 md:border-b-0 md:border-l md:border-l-gray-400 md:pl-4 border text-center font-[NerdFont]"
+					class="border-gray-400 px-2 py-1 text-base md:right-0 md:border-t-0 md:border-r-0 md:border-b-0 md:border-l md:border-l-gray-400 md:pl-4 border text-center font-[NerdFont] outline-0"
 					></button
 				>
 			</div>
@@ -208,7 +208,7 @@
 	<button
 		type="button"
 		onclick={toggleTerminal}
-		class={`${terminal.isTerminalEnabled ? 'hidden' : ''} right-0 bottom-0 h-14 w-14 rounded-t-2xl rounded-bl-2xl border-gray-500 bg-gray-200 p-2.5 pl-1 text-3xl shadow-gray-700 hover:shadow-xl md:h-17 md:w-17 md:p-3.5 dark:text-lighttext dark:shadow-gray-400 absolute z-100 border-t-2 border-l-2 font-[NerdFont] shadow-none transition-all dark:bg-[#0c0c0c]`}
+		class={`${terminal.isTerminalEnabled ? 'hidden' : ''} right-0 bottom-0 h-14 w-14 rounded-2xl border-gray-500 bg-gray-200 p-2.5 pl-1 text-3xl  md:h-17 md:w-17 md:p-3.5 dark:text-lighttext  absolute z-100 border-2 font-[NerdFont] transition-all dark:bg-[#0c0c0c]`}
 		></button
 	>
 </div>

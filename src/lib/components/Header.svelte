@@ -4,6 +4,8 @@
 	import { terminal } from '$lib/state/terminalState.svelte';
 	import { theme } from '$lib/state/themeState.svelte';
 	import { langState } from '$lib/state/langState.svelte';
+	import { slide } from 'svelte/transition';
+	import { quintOut } from 'svelte/easing';
 
 	let innerWidth = $state(1024);
 	const isNarrow = $derived(innerWidth < 420);
@@ -24,15 +26,18 @@
 	function toggleTheme() {
 		theme.toggle();
 	}
+	function toggleLang() {
+		langState.toggle();
+	}
 
-	let menuOpen = $state(false);
+	let isMenuOpen = $state(false);
 
 	function toggleMenu() {
-		menuOpen = !menuOpen;
+		isMenuOpen = !isMenuOpen;
 	}
 
 	function closeMenu() {
-		menuOpen = false;
+		isMenuOpen = false;
 	}
 
 	const links = [
@@ -95,8 +100,7 @@
 	</button>
 
 	<button
-		type="button"
-		onclick={langState.toggle}
+		onclick={toggleLang}
 		class="border-archlinux rounded-xl py-1 pr-2.5 pl-1.5 md:inline md:py-1.5 md:px-3 md:ml-3 font-bold hidden border text-center whitespace-pre outline-0"
 	>
 		<span class="pr-3 text-lg font-normal font-[NerdFont]"></span>{langState.current === 'ja'
@@ -107,31 +111,32 @@
 	<button
 		class="ml-2 h-6 w-7 md:ml-10 md:h-9 md:w-11 relative shrink-0 outline-0"
 		aria-label="Toggle menu"
-		aria-expanded={menuOpen}
+		aria-expanded={isMenuOpen}
 		aria-controls="mobile-menu"
 		onclick={toggleMenu}
 	>
 		<span
 			class={`top-0 left-0 h-1 w-7 rounded-4xl bg-gray-300 md:h-1.5 md:w-11 absolute transition-transform duration-200 ${
-				menuOpen ? 'translate-y-2.5 md:translate-y-3.5 rotate-45' : ''
+				isMenuOpen ? 'translate-y-2.5 md:translate-y-3.5 rotate-45' : ''
 			}`}
 		></span>
 		<span
 			class="top-2.5 left-0 h-1 w-7 rounded-4xl bg-gray-300 md:top-3.5 md:h-1.5 md:w-11 absolute transition-opacity duration-200"
-			class:opacity-0={menuOpen}
+			class:opacity-0={isMenuOpen}
 		></span>
 		<span
 			class={`top-5 left-0 h-1 w-7 rounded-4xl bg-gray-300 md:top-7 md:h-1.5 md:w-11 absolute transition-transform duration-200 ${
-				menuOpen ? '-translate-y-2.5 md:-translate-y-3.5 -rotate-45' : ''
+				isMenuOpen ? '-translate-y-2.5 md:-translate-y-3.5 -rotate-45' : ''
 			}`}
 		></span>
 	</button>
 
-	{#if menuOpen}
+	{#if isMenuOpen}
 		<nav
 			id="mobile-menu"
 			class="border-b-archlinux left-0 mt-0.75 p-4 absolute top-full z-10 flex w-full flex-col items-center border-b-2 bg-[#333333]/95 transition-all"
 			aria-label="Mobile navigation"
+			transition:slide={{ duration: 300, easing: quintOut }}
 		>
 			{#each links as link (link.id)}
 				<a
@@ -153,7 +158,7 @@
 			<div class="md:hidden mt-1 flex">
 				<button
 					type="button"
-					onclick={langState.toggle}
+					onclick={toggleLang}
 					class="border-archlinux mt-1 rounded-xl py-1 pr-2.5 pl-1.5 border text-center font-[NerdFont] whitespace-pre outline-0"
 				>
 					<span class="pr-3 text-lg font-normal font-[NerdFont]"></span>{langState.current === 'ja'

@@ -91,7 +91,7 @@
 
 		const quoteInterval = setInterval(() => {
 			cycleQuote();
-		}, 4500);
+		}, 7000);
 
 		const observer = new IntersectionObserver(
 			(entries) => {
@@ -226,9 +226,7 @@
 		</div>
 
 		<div class="pt-2 text-lg md:p-2">
-			<div
-				class="md:gap-5 gap-3 rounded border-gray-700 p-4 md:grid-cols-4 dark:border-gray-500 grid grid-cols-2 border"
-			>
+			<div class="md:gap-5 gap-3 rounded md:grid-cols-4 grid grid-cols-2">
 				{#each filteredSkills as skill (skill.id)}
 					<SkillCard {skill} />
 				{/each}
@@ -245,7 +243,7 @@
 				</span>
 				<span class="md:px-2">rg24010r [at] st.omu.ac.jp</span>
 				<button
-					class="md:ml-5 bg-archlinux/10 border-archlinux hover:bg-archlinux/95 rounded-xl font-bold px-2 py-0.5 font-mono md:block hidden w-fit border outline-0 transition-all duration-150"
+					class="md:ml-5 bg-archlinux/10 border-archlinux hover:bg-archlinux/95 rounded-xl font-bold px-2 py-0.5 font-mono md:block hidden w-fit cursor-pointer border outline-0 transition-all duration-150"
 					onclick={copyMail}
 				>
 					Copy
@@ -254,7 +252,7 @@
 			</div>
 			<div class="md:hidden my-2 flex">
 				<button
-					class="md:ml-5 bg-archlinux/10 border-archlinux hover:bg-archlinux/95 rounded-xl font-bold px-2 py-0.5 font-mono block w-fit border outline-0 transition-all duration-150"
+					class="md:ml-5 bg-archlinux/10 border-archlinux hover:bg-archlinux/95 rounded-xl font-bold px-2 py-0.5 font-mono block w-fit cursor-pointer border outline-0 transition-all duration-150"
 					onclick={copyMail}
 				>
 					Copy

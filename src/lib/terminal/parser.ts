@@ -214,6 +214,20 @@ export async function parseCommand(input: string, Path: string) {
 			) {
 				return { response: ['+page.svelte'] };
 			}
+			if (
+				(Path == '/contact' && target == '.') ||
+				target == '/contact' ||
+				(Path == '' && target == 'contact')
+			) {
+				return { response: ['+page.svelte'] };
+			}
+			if (
+				(Path == '/works' && target == '.') ||
+				target == '/works' ||
+				(Path == '' && target == 'works')
+			) {
+				return { response: ['+page.svelte'] };
+			}
 			return {
 				response: `ls: cannot access '${target}': No such file or directory`,
 				isError: true
