@@ -5,6 +5,9 @@
 		"  Booting `PortfolioOS Folix'",
 		' ',
 		'Loading Kernel Folix ...',
+		'Loading Framework Svelte5 ...',
+		'Loading Framework SvelteKit ...',
+		'Loading Styles TailwindCSS ...',
 		'Loading My Portfolio ...'
 	];
 
@@ -22,25 +25,26 @@
 				// 全てのメッセージが出終わったら、少し待ってからメイン画面へ
 				visibleLines.push('Loading ...');
 				visibleLines.push(' ');
+
 				setTimeout(() => {
 					visibleLines.push('Welcome to my portfolio!');
-				}, 750);
+				}, 600);
+
 				// (再起動中じゃない＝初回起動時のみ、自動で終了させる)
 				if (!os.isRebooting) {
 					setTimeout(() => {
 						os.setBooting(false);
-					}, 1900);
+					}, 2000);
 				}
 			}
-		}, 250); // 0.25秒ごとに次の行を表示（お好みで調整）
+		}, 200);
 
 		return () => clearInterval(interval);
 	});
 </script>
 
-<div class="inset-0 bg-black p-6 font-mono text-white fixed z-9999 flex flex-col">
+<div class="inset-0 bg-black p-6 font-mono text-white fixed z-9999 flex flex-col whitespace-pre">
 	{#each visibleLines as line, i (i)}
-		<div class="whitespace-pre">{line}</div>
+		<div>{line}</div>
 	{/each}
-	<div class="mt-2 h-4 w-2 bg-white"></div>
 </div>
