@@ -180,7 +180,9 @@
 		</div>
 	</section>
 	<section id="featured" class="mb-5 scroll-mt-21 pb-10">
-		<h2 class="mb-4 border-green-500 text-4xl font-bold md:text-5xl border-b">Featured-Projects</h2>
+		<h2 class="mb-4 border-green-500 pb-1.5 text-4xl font-bold md:text-5xl border-b">
+			Featured-Projects
+		</h2>
 		<p class="text-lg">{t.featuredPj.desc}</p>
 		<div class="my-6 gap-6 md:grid-cols-2 grid grid-cols-1 flex-col">
 			{#each featuredWorks as work, i (i)}
