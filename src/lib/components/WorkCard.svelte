@@ -51,7 +51,7 @@
 		<div class="my-2 row-3 opacity-90">
 			{#each work.tech as tech, i (i)}
 				<span
-					class={`bg-${tech.bg} mx-1 md:px-2 px-2 my-1 md:py-1 md:inline inline-block font-[NerdFont] dark:text-${tech.textColor} text-${tech.textColor} rounded-full`}
+					class={`bg-${tech.bg} mx-1 md:px-2 px-2 my-1 md:py-1 inline-block font-[NerdFont] dark:text-${tech.textColor} text-${tech.textColor} rounded-full`}
 				>
 					{tech.label}
 				</span>

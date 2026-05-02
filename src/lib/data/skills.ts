@@ -4,7 +4,7 @@ export type Skill = {
     name: string;
     level: {
         ja: '入門レベル' | '初級' | '中級' | '上級';
-        en: 'Introductory' | 'beginner' | 'intermediate' | 'advanced';
+        en: 'introductory' | 'beginner' | 'intermediate' | 'advanced';
     }
     description: {
         ja: string;
@@ -108,7 +108,7 @@ export const skillsData: Skill[] = [
         name: 'Rust',
         level: {
             ja: '入門レベル',
-            en: 'Introductory'
+            en: 'introductory'
         },
         description: {
             ja: '鋭意学習中。',
@@ -244,7 +244,7 @@ export const skillsData: Skill[] = [
         name: 'Docker',
         level: {
             ja: '入門レベル',
-            en: 'Introductory'
+            en: 'introductory'
         },
         description: {
             ja: 'コンテナ技術の基本的な理解と使用経験あり。',

@@ -125,7 +125,7 @@
 <div
 	class="gap-10 md:px-10 px-5 pt-30 md:max-w-3/5 mx-auto max-w-screen flex-col justify-center text-left align-baseline"
 >
-	<section id="top" class="mb-55 scroll-mt-31 pt-40 md:mb-75 md:pt-50">
+	<section id="top" class="mb-55 scroll-mt-31 pt-40 md:mb-100 md:pt-35">
 		<p class="font-mono text-xl text-green-600 dark:text-green-400">Hi, my name is</p>
 		<h1 class="text-6xl font-bold md:my-3 md:text-9xl">Rirannda</h1>
 		<p class="my-3 text-4xl">O.M.U.C.T. Student.</p>
@@ -227,7 +227,7 @@
 
 		<div class="pt-2 text-lg md:p-2">
 			<div
-				class="md:gap-8 gap-3 rounded border-gray-700 p-4 md:grid-cols-4 dark:border-gray-500 grid grid-cols-2 border"
+				class="md:gap-5 gap-3 rounded border-gray-700 p-4 md:grid-cols-4 dark:border-gray-500 grid grid-cols-2 border"
 			>
 				{#each filteredSkills as skill (skill.id)}
 					<SkillCard {skill} />
