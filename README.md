@@ -14,7 +14,6 @@ EN:[README_EN.md](README_EN.md)
 * **Framework:** [SvelteKit](https://kit.svelte.dev/) (Svelte 5)
 * **Styling:** [Tailwind CSS](https://tailwindcss.com/)
 * **Package Manager:** pnpm
-* **Testing:** Vitest
 * **Deployment:** GitHub Pages (via GitHub Actions)
 
 ## Special Thanks

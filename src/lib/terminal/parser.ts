@@ -60,13 +60,11 @@ export async function parseCommand(input: string, Path: string) {
     if (options.length > 0 && !(command in noOptionCommands)) {
         return { response: `The '${command}' command does not take any options. Usage: ${noOptionCommands[command] || 'No usage information available.'}`, isError: true };
     }
-    if (args.length === 1 && args[0] !== '' && noArgumentsCommands.has(command)) {
+    if (args.length > 0 && !(args.length === 1 && args[0] === '') && noArgumentsCommands.has(command)) {
         return { response: `The '${command}' command does not take any arguments.`, isError: true };
     }
 
     switch (command) {
-        case 'test':
-            return { response: `${Path}` };
         case 'help':
             {
                 // 引数がない場合 (argsが [''] のみの場合)
@@ -169,7 +167,7 @@ export async function parseCommand(input: string, Path: string) {
                 return { response: `ls: cannot access '${target}': No such file or directory`, isError: true };
             }
         case 'pwd':
-            return { response: 'home/visitor/portfolio' + Path };
+            return { response: '/home/visitor/portfolio' + Path };
         case 'reset':
             terminal.clearOutput();
             return { response: '' };
@@ -235,7 +233,7 @@ export async function parseCommand(input: string, Path: string) {
                 if (args.length > 1) {
                     return { response: `open: too many arguments. Usage: open [target]`, isError: true };
                 }
-                if (args.length === 0) {
+                if (args[0] === '') {
                     return { response: `Usage: open [target]`, isError: true };
                 }
                 const target = args[0].toLowerCase();
@@ -248,8 +246,7 @@ export async function parseCommand(input: string, Path: string) {
                     'discord': 'Opening Discord.com ...',
                 };
                 if (target in links) {
-                    window.open(links[target], '_blank');
-                    return { response: `${textTarget[target]}` };
+                    return { response: `${textTarget[target]}`, action: { type: 'open', url: links[target] } };
                 } else {
                     return { response: `open: unknown target '${target}'. Available targets: ${Object.keys(links).join(', ')}`, isError: true };
                 }

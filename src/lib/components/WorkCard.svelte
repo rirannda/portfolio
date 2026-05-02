@@ -32,6 +32,7 @@
 				<img
 					src={img}
 					alt={`${work.name} screenshot ${i + 1}`}
+					loading="lazy"
 					class={`inset-0 absolute h-full w-full object-cover transition-opacity duration-1000 ${
 						i === currentIndex ? 'opacity-100' : 'opacity-0'
 					}`}

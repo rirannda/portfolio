@@ -225,7 +225,7 @@
 
 @font-face {
 	font-family: 'NerdFont';
-	src: url('./fonts/HackNerdFont-Regular.ttf') format('truetype');
+	src: url('./fonts/HackNerdFont-Regular.woff2') format('woff2');
 	font-weight: normal;
 	font-style: normal;
 	font-display: swap;
@@ -252,8 +252,16 @@
 	body {
 		background-color: var(--bg-color);
 		color: var(--text-color);
-		/* Tailwindのtransitionクラスをつけておくと、テーマ切り替え時にフワッと色が変わってオシャレです */
 		@apply transition-colors duration-300;
+	}
+}
+
+@layer components {
+	.commandline-enable {
+		@apply translate-y-0 pointer-events-auto opacity-100;
+	}
+	.commandline-disable {
+		@apply -translate-y-4 pointer-events-none opacity-0;
 	}
 }
 

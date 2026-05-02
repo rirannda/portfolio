@@ -12,7 +12,6 @@ In addition to standard scrolling and clicking, it includes a gimmick that allow
 * **Framework:** [SvelteKit](https://kit.svelte.dev/) (Svelte 5)
 * **Styling:** [Tailwind CSS](https://tailwindcss.com/)
 * **Package Manager:** pnpm
-* **Testing:** Vitest
 * **Deployment:** GitHub Pages (via GitHub Actions)
 
 ## Special Thanks

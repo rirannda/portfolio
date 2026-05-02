@@ -1,7 +1,7 @@
-export const langState = $state({
-    current: 'ja' as 'ja' | 'en'
-});
-
-export function toggleLang() {
-    langState.current = langState.current === 'ja' ? 'en' : 'ja';
+class LangState {
+    current = $state<'ja' | 'en'>('ja');
+    toggle() {
+        this.current = this.current === 'ja' ? 'en' : 'ja';
+    }
 }
+export const langState = new LangState();

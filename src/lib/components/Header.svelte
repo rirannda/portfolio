@@ -3,7 +3,7 @@
 	import { page } from '$app/state';
 	import { terminal } from '$lib/state/terminalState.svelte';
 	import { theme } from '$lib/state/themeState.svelte';
-	import { langState, toggleLang } from '$lib/state/langState.svelte';
+	import { langState } from '$lib/state/langState.svelte';
 
 	let innerWidth = $state(1024);
 	const isNarrow = $derived(innerWidth < 420);
@@ -96,7 +96,7 @@
 
 	<button
 		type="button"
-		onclick={toggleLang}
+		onclick={langState.toggle}
 		class="border-archlinux rounded-xl py-1 pr-2.5 pl-1.5 md:inline md:py-1.5 md:px-3 md:ml-3 font-bold hidden border text-center whitespace-pre outline-0"
 	>
 		<span class="pr-3 text-lg font-normal font-[NerdFont]"></span>{langState.current === 'ja'
@@ -153,7 +153,7 @@
 			<div class="md:hidden mt-1 flex">
 				<button
 					type="button"
-					onclick={toggleLang}
+					onclick={langState.toggle}
 					class="border-archlinux mt-1 rounded-xl py-1 pr-2.5 pl-1.5 border text-center font-[NerdFont] whitespace-pre outline-0"
 				>
 					<span class="pr-3 text-lg font-normal font-[NerdFont]"></span>{langState.current === 'ja'

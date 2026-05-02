@@ -6,7 +6,6 @@
 
 	let inputValue = $state('');
 	let historyIndex = $state(-1);
-	let isExpanded = $state(false);
 	const maxIndex = $derived(terminal.history.length - 1);
 	const currentPrompt = $derived(
 		'visitor@PortfoliOS:' +
@@ -102,6 +101,9 @@
 		if (input) {
 			terminal.pushHistory(input); // Historyに保存
 			const result = await parseCommand(input, currentPath);
+			if (result && 'action' in result && result.action?.type === 'open') {
+				window.open(result.action.url, '_blank');
+			}
 			terminal.pushOutput(
 				currentPrompt,
 				input,
@@ -113,19 +115,19 @@
 		historyIndex = -1;
 	}
 	function toggleTerminal() {
-		terminal.isLineExpanded = !terminal.isLineExpanded;
+		terminal.isTerminalEnabled = !terminal.isTerminalEnabled;
 	}
 	function toggleExpand() {
-		isExpanded = !isExpanded;
+		terminal.isHistoryOpened = !terminal.isHistoryOpened;
 	}
 </script>
 
 <svelte:window bind:innerWidth />
 
 <div id="terminalWrapper" class="right-0 bottom-0 sticky z-100">
-	{#if isExpanded}
+	{#if terminal.isHistoryOpened}
 		<div
-			class={`${!terminal.isLineExpanded ? 'hidden' : ''} top-16 right-0 bottom-16 left-0 mt-1 bg-gray-200/90 p-3 font-mono text-sm text-black md:top-18 md:bottom-10 md:p-5 md:text-base dark:text-lighttext fixed z-50 overflow-x-auto overflow-y-auto transition-colors duration-300 dark:bg-[#0c0c0c]/90`}
+			class={`${!terminal.isTerminalEnabled ? 'hidden' : ''} top-16 right-0 bottom-16 left-0 mt-1 bg-gray-200/90 p-3 font-mono text-sm text-black md:top-18 md:bottom-10 md:p-5 md:text-base dark:text-lighttext fixed z-50 overflow-x-auto overflow-y-auto transition-colors duration-300 dark:bg-[#0c0c0c]/90`}
 		>
 			{#each terminal.output as line, i (i)}
 				<div class="mb-2">
@@ -142,7 +144,9 @@
 		</div>
 	{:else}
 		<div
-			class={`fixed ${!terminal.isLineExpanded ? 'translate-y-4 pointer-events-none opacity-0' : 'translate-y-0 pointer-events-auto opacity-100'} bottom-20 border-t-gray-700 bg-gray-200 px-3 pt-2 font-mono text-sm md:bottom-13 md:px-5 md:text-base dark:text-lighttext z-25 w-full overflow-x-auto border-t transition-all duration-300 dark:bg-[#0c0c0c]`}
+			class="bottom-20 border-t-gray-700 bg-gray-200 px-3 pt-2 font-mono text-sm md:bottom-13 md:px-5 md:text-base dark:text-lighttext fixed z-25 w-full overflow-x-auto border-t transition-all duration-300 dark:bg-[#0c0c0c]"
+			class:commandline-enable={terminal.isTerminalEnabled}
+			class:commandline-disable={!terminal.isTerminalEnabled}
 			transition:fly={{ y: 16, duration: 220 }}
 		>
 			{#if latest == undefined}
@@ -162,7 +166,9 @@
 	{/if}
 	<form
 		onsubmit={handleSubmit}
-		class={`${!terminal.isLineExpanded ? 'translate-y-4 pointer-events-none opacity-0' : 'translate-y-0 pointer-events-auto opacity-100'} right-0 bottom-0 left-0 bg-gray-200 p-2 font-mono dark:text-lighttext fixed z-50 transition-all duration-300 dark:bg-[#0c0c0c]`}
+		class="right-0 bottom-0 left-0 bg-gray-200 p-2 font-mono dark:text-lighttext fixed z-50 transition-all duration-300 dark:bg-[#0c0c0c]"
+		class:commandline-enable={terminal.isTerminalEnabled}
+		class:commandline-disable={!terminal.isTerminalEnabled}
 		transition:fly={{ y: 16, duration: 220 }}
 	>
 		<div class="gap-2 md:flex-row md:items-center md:px-3 flex w-full flex-col">
@@ -202,7 +208,7 @@
 	<button
 		type="button"
 		onclick={toggleTerminal}
-		class={`${terminal.isLineExpanded ? 'hidden' : ''} right-0 bottom-0 h-14 w-14 rounded-t-2xl rounded-bl-2xl border-gray-500 bg-gray-200 p-2.5 pl-1 text-3xl shadow-gray-700 hover:shadow-xl md:h-17 md:w-17 md:p-3.5 dark:text-lighttext dark:shadow-gray-400 absolute z-100 border-t-2 border-l-2 font-[NerdFont] shadow-none transition-all dark:bg-[#0c0c0c]`}
+		class={`${terminal.isTerminalEnabled ? 'hidden' : ''} right-0 bottom-0 h-14 w-14 rounded-t-2xl rounded-bl-2xl border-gray-500 bg-gray-200 p-2.5 pl-1 text-3xl shadow-gray-700 hover:shadow-xl md:h-17 md:w-17 md:p-3.5 dark:text-lighttext dark:shadow-gray-400 absolute z-100 border-t-2 border-l-2 font-[NerdFont] shadow-none transition-all dark:bg-[#0c0c0c]`}
 		></button
 	>
 </div>

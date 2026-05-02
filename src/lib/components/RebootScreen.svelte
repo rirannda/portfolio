@@ -23,7 +23,6 @@
 		const interval = setInterval(() => {
 			if (currentIndex < rebootMessages.length - 1) {
 				visibleLines.push(rebootMessages[currentIndex]);
-				visibleLines = visibleLines;
 				currentIndex++;
 			} else if (currentIndex === rebootMessages.length - 1) {
 				// 最後のメッセージだけ0.3秒待ってから表示

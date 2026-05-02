@@ -266,7 +266,7 @@
 					href="https://github.com/rirannda"
 					class="px-3 rounded-2xl md:mx-2 bg-github/10 border-github hover:bg-github/95 py-1 text-lg font-bold md:inline block w-fit border font-[NerdFont] transition-all duration-150"
 					target="_blank"
-					rel="external"
+					rel="external noopener noreferrer"
 				>
 					<span class="pr-1 text-2xl font-[NerdFont]"></span>
 					rirannda

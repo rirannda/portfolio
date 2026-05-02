@@ -7,13 +7,21 @@
 	import BootingScreen from '$lib/components/BootingScreen.svelte';
 	import Footer from '$lib/components/Footer.svelte';
 	import { os } from '$lib/state/osState.svelte';
+	import { onMount } from 'svelte';
 
 	let { children } = $props();
-	os.setBooting(true);
-	os.setRebooting(false);
+	onMount(() => {
+		os.setBooting(true);
+		os.setRebooting(false);
+	});
 </script>
 
-<svelte:head><link rel="icon" href={favicon} /></svelte:head>
+<svelte:head>
+	<meta name="description" content="PortfoliOS - O.M.U.C.T. Student, Rirannda's portfolio" />
+	<meta property="og:title" content="Rirannda Portfolio" />
+	<meta property="og:description" content="..." />
+	<link rel="icon" href={favicon} />
+</svelte:head>
 
 {#if os.isBooting}
 	<BootingScreen />

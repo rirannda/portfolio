@@ -30,12 +30,9 @@
 					visibleLines.push('Welcome to my portfolio!');
 				}, 600);
 
-				// (再起動中じゃない＝初回起動時のみ、自動で終了させる)
-				if (!os.isRebooting) {
-					setTimeout(() => {
-						os.setBooting(false);
-					}, 2000);
-				}
+				setTimeout(() => {
+					os.setBooting(false);
+				}, 2000);
 			}
 		}, 200);
 

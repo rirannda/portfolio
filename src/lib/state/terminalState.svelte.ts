@@ -11,7 +11,8 @@ class TerminalState {
 
     currentPath = $state<string>('/'); // カレントディレクトリを保持
 
-    isLineExpanded = $state(false); // ターミナルが展開されているかどうか
+    isTerminalEnabled = $state(false); // ターミナルが展開されているかどうか
+    isHistoryOpened = $state(false);
 
     pushOutput(path: string, command: string, response: string | string[], isError = false) {
         this.output.push({ path, command, response, isError });
